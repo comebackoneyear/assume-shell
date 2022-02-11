@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -10,7 +9,7 @@ import (
 	"syscall"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/comebackoneyear/assume-shell/pkg/profile"
 )
 
 func main() {
@@ -22,13 +21,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	profile := argv[0]
-	creds, err := assumeProfile(profile)
+	assumeProfile := argv[0]
+	creds, err := profile.AssumeProfile(assumeProfile)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = shellWithCredentials(profile, creds)
+	err = shellWithCredentials(assumeProfile, creds)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,20 +41,6 @@ func init() {
 func usage() {
 	fmt.Fprintf(os.Stderr, "Usage: %s <profile>\n", os.Args[0])
 	flag.PrintDefaults()
-}
-
-func assumeProfile(profile string) (aws.Credentials, error) {
-	ctx := context.Background()
-
-	cfg, err := config.LoadDefaultConfig(
-		ctx,
-		config.WithSharedConfigProfile(profile),
-	)
-	if err != nil {
-		return aws.Credentials{}, err
-	}
-
-	return cfg.Credentials.Retrieve(ctx)
 }
 
 func shellWithCredentials(profile string, creds aws.Credentials) error {
