@@ -71,3 +71,6 @@ github.com/aws/smithy-go/rand
 github.com/aws/smithy-go/time
 github.com/aws/smithy-go/transport/http
 github.com/aws/smithy-go/transport/http/internal/io
+# github.com/hako/durafmt v0.0.0-20210608085754-5c1018a4e16b
+## explicit; go 1.11
+github.com/hako/durafmt
