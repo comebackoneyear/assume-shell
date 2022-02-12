@@ -79,7 +79,7 @@ It will also set the environment variable `ASSUMED_PROFILE_EXPIRES` to a unix ti
 
 ## TODO
 
-* [ ] Use default profile on empty argv
+* [x] Use default profile on empty argv
 * [ ] Add MFA support
 * [ ] Add brew installer or MacOS
 * [ ] Add Support to execute commands
