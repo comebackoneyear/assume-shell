@@ -31,12 +31,14 @@ region = eu-north-1
 region = eu-west-1
 role_arn = arn:aws:iam::00000001234:role/Admin
 source_profile = work
+duration_seconds = 43200
 
 [profile prod]
 # Production AWS Account.
 region = us-east-1
 role_arn = arn:aws:iam::00000005678:role/Deploy
 source_profile = work
+duration_seconds = 43200
 ```
 
 `~/.aws/credentials`:
@@ -60,16 +62,20 @@ The keys are stored in the `~/.aws/credentials` file.
 
 The `stage` and `prod` AWS Accounts have IAM roles named `Admin` and `Deploy`.
 The `assume-shell` tool helps a user authenticate (using their keys) and then assume the privilege of the the role, even across AWS accounts!
-
+The assumed shell will be valid for `duration_seconds`, default `900` seconds, it can not be greater than the role allows. 
 ## Usage
 
 Start a new shell with the role stage:
 
 ```bash
 $ assume-shell stage
+Exported assumed role credentials for profile stage, expires in 11 hours 59 minutes
+$
 ```
 
-The `assume-shell` tool sets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` environment variables and then executes the $SHELL. In addition the `ASSUMED_PROFILE` variable will be set to whatever profile was assumed
+The `assume-shell` tool sets `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` environment variables and then executes the $SHELL. In addition the `ASSUMED_PROFILE` variable will be set to whatever profile was assumed.
+It will also set the environment variable `ASSUMED_PROFILE_EXPIRES` to a unix timestamp when the credentials will expire, useful if you want to implement something in your shell to detect when it happens.
+
 
 ## TODO
 

@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/aws/aws-sdk-go-v2 v1.13.0
 	github.com/aws/aws-sdk-go-v2/config v1.13.1
+	github.com/hako/durafmt v0.0.0-20210608085754-5c1018a4e16b
 )
 
 require (
