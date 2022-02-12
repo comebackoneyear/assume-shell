@@ -1,0 +1,46 @@
+---
+project_name: assume-shell
+
+release:
+  github:
+    owner: comebackoneyear
+    name: assume-shell
+
+builds:
+  - binary: assume-shell
+    goos:
+      - darwin
+      - windows
+      - linux
+      - freebsd
+    goarch:
+      - amd64
+      - arm64
+      - arm
+      - 386
+    goarm:
+      - 6
+      - 7
+    env:
+      - CGO_ENABLED=0
+    ignore:
+      - goos: darwin
+        goarch: 386
+    main: ./cmd/assume-shell/
+    flags:
+      - -trimpath
+    ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.ShortCommit}} -X main.date={{.Date}} -X main.arch={{.Arch}}
+
+archives:
+  - format: tar.gz
+    wrap_in_directory: true
+    format_overrides:
+      - goos: windows
+        format: zip
+    name_template: '{{.ProjectName}}-{{.Version}}-{{.Os}}-{{.Arch}}{{if .Arm}}v{{.Arm}}{{end}}'
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: '{{ .ProjectName }}-{{ .Version }}-checksums.txt'

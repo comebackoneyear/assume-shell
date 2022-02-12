@@ -4,8 +4,14 @@ GOLIST?=$$(go list ./... | grep -vE "(vendor|static)")
 CGO_ENABLED=0
 export GOFLAGS := -mod=vendor $(GOFLAGS)
 default: build
-build:
-	go build -o ${GOPATH}/bin/assume-shell cmd/assume-shell/*.go
+
+.PHONY: FORCE
+
+build: assume-shell
+.PHONY: build
+
+assume-shell: FORCE
+	go build -o $@ ./cmd/assume-shell/*.go
 
 # tools fetches necessary dev requirements
 tools-local:
