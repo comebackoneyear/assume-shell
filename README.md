@@ -6,7 +6,7 @@ This tool will request AWS credentials for a given profile/role and start a new 
 If you have a working Go >=1.17 environment:
 
 ```bash
-$ go install -u github.com/comebackoneyear/assume-shell/cmd/assume-shell@latest
+$ go install github.com/comebackoneyear/assume-shell/cmd/assume-shell@latest
 ```
 
 If you have a working Go <1.17 environment:
